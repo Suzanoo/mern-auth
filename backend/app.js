@@ -7,9 +7,9 @@ const morgan = require('morgan');
 // const xss = require('xss-clean');
 // const hpp = require('hpp');
 
-// const AppError = require('./utils/appError');
-// const globalErrorHandler = require('./controllers/errorController');
-// const userRouter = require(`${__dirname}/routes/userRoutes`);
+const AppError = require('./utils/appError');
+const globalErrorHandler = require('./controller/errorController');
+// const userRouter = require(`${__dirname}/routes/userRoute`);
 
 const app = express();
 
@@ -70,10 +70,10 @@ app.use((req, res, next) => {
 // ROUTE HANDLER ----------------------------------
 // app.use('/api/v1/users', userRouter);
 
-// app.all('*', (req, res, next) => {
-//   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-// });
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
 
-// app.use(globalErrorHandler);
+app.use(globalErrorHandler);
 
 module.exports = app;

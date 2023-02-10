@@ -2,7 +2,9 @@ require('dotenv').config();
 
 const connectDB = require('./config/db');
 
+// Connect to Database
 connectDB();
+
 // Handle uncaught exceptions
 // process.on('uncaughtException', (err) => {
 //   console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...');
@@ -13,6 +15,7 @@ connectDB();
 // Import express application
 const app = require('./app');
 
+// Port settings
 const port = 5000;
 app.listen(port, () => {
   console.log(`[INFO] Running on port ${port}...`);
