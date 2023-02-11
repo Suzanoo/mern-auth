@@ -1,11 +1,11 @@
 const express = require('express');
 const morgan = require('morgan');
 
-// const rateLimit = require('express-rate-limit');
-// const helmet = require('helmet');
-// const mongoSanitize = require('express-mongo-sanitize');
-// const xss = require('xss-clean');
-// const hpp = require('hpp');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorController');
@@ -17,7 +17,6 @@ const userRoute = require(`${__dirname}/routes/userRoute`);
 const app = express();
 app.use(express.json({ limit: '10kb' }));
 
-/*
 // 1.1) MIDDLEWARES for SECURITY
 // Set security HTTP headers
 app.use(helmet());
@@ -49,7 +48,6 @@ app.use(
     ],
   })
 );
-*/
 
 // 1.2) MIDDLEWARES
 // Development logging
