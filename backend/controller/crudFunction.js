@@ -3,6 +3,7 @@ const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
 
 exports.deleteOne = (Model) =>
+  // eslint-disable-next-line arrow-body-style
   catchAsync(async (req, res, next) => {
     const doc = await Model.findByIdAndDelete(req.params.id);
 
@@ -17,6 +18,7 @@ exports.deleteOne = (Model) =>
   });
 
 exports.updateOne = (Model) =>
+  // eslint-disable-next-line arrow-body-style
   catchAsync(async (req, res, next) => {
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -36,6 +38,7 @@ exports.updateOne = (Model) =>
   });
 
 exports.createOne = (Model) =>
+  // eslint-disable-next-line arrow-body-style
   catchAsync(async (req, res, next) => {
     const doc = await Model.create(req.body);
 
@@ -47,10 +50,11 @@ exports.createOne = (Model) =>
     });
   });
 
-exports.getOne = (Model, populateOption) =>
+exports.getOne = (Model, popOptions) =>
+  // eslint-disable-next-line arrow-body-style
   catchAsync(async (req, res, next) => {
     let query = Model.findById(req.params.id);
-    if (populateOption) query = query.populate(populateOption);
+    if (popOptions) query = query.populate(popOptions);
     const doc = await query;
 
     if (!doc) {
@@ -66,12 +70,12 @@ exports.getOne = (Model, populateOption) =>
   });
 
 exports.getAll = (Model) =>
+  // eslint-disable-next-line arrow-body-style
   catchAsync(async (req, res, next) => {
     // To allow for nested GET reviews on tour (hack)
     let filter = {};
     if (req.params.tourId) filter = { tour: req.params.tourId };
 
-    //
     const features = new APIFeatures(Model.find(filter), req.query)
       .filter()
       .sort()

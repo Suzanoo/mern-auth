@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
-const connectDB = async () => {
+const connectDB = async (HOST) => {
   try {
-    const DB = process.env.DATABASE_LOCAL;
+    // const DB = process.env.DATABASE_LOCAL;
+    const DB = HOST.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
 
     mongoose.set('strictQuery', false);
 

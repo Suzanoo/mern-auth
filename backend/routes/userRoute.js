@@ -1,22 +1,24 @@
 const express = require('express');
 const userController = require('../controller/userController');
-// const authController = require('../controller/authController');
+const authController = require('../controller/authController');
 
 const router = express.Router();
 
-// router.post('/signup', authController.signup);
-// router.post('/login', authController.login);
-// router.post('/forgotPassword', authController.forgotPassword);
-// router.patch('/resetPassword/:token', authController.resetPassword);
+router.post('/signup', authController.signup);
+router.post('/login', authController.login);
+router.post('/forgotPassword', authController.forgotPassword);
+router.patch('/resetPassword/:token', authController.resetPassword);
 
-// router.use(authController.protect);
+// Protect rooutes
+router.use(authController.protect);
 
-// router.get('/me', userController.getMe, userController.getUser);
-// router.patch('/updateMyPassword', authController.updatePassword);
-// router.patch('/updateUserData', userController.updateUserData);
-// router.delete('/deleteCurrentUser', userController.deleteCurrentUser);
+router.get('/me', userController.getMe, userController.getUser);
+router.patch('/updateMyPassword', authController.updatePassword);
+router.patch('/updateUserData', userController.updateUserData);
+router.delete('/deleteCurrentUser', userController.deleteCurrentUser);
 
-// router.use(authController.restrictTo('admin'));
+// Admin controller
+router.use(authController.restrictTo('admin'));
 
 router
   .route('/')
