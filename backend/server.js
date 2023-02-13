@@ -9,7 +9,9 @@ process.on('uncaughtException', (err) => {
 });
 
 // Connect to Database
-connectDB(process.env.DATABASE_LOCAL);
+// const HOST = process.env.DATABASE;
+const HOST = process.env.DATABASE_LOCAL;
+connectDB(HOST);
 
 // Import express application
 const app = require('./app');

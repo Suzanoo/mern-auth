@@ -2,12 +2,19 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authService from './authService';
 
 /*
-
+1.Fetch user from localStorage & cast to JSON object
+2.Initialize state
+3.Create async action-reducer:
+  -register
+  -login
+  -logout
+4.Create slice
 */
+
 // Fetch user from localStorage & cast to JSON object
 const user = JSON.parse(localStorage.getItem('user'));
 
-// Initialize user state
+// Initialize state
 const initialState = {
   user: user ? user : null,
   isError: false,
@@ -16,9 +23,9 @@ const initialState = {
   message: '',
 };
 
-// Create async action: register
+// Create async action-reducer: register
 export const register = createAsyncThunk(
-  // async type
+  // async action type
   'auth/register',
   // function return payload
   async (user, thunkAPI) => {
@@ -34,9 +41,9 @@ export const register = createAsyncThunk(
   }
 );
 
-// Create async action: login
+// Create async action-reducer: login
 export const login = createAsyncThunk(
-  // async type
+  // async action type
   'auth/login',
   // function return payload
   async (user, thunkAPI) => {
@@ -47,15 +54,22 @@ export const login = createAsyncThunk(
         err.message ||
         (err.response && err.response.data && err.response.data.message) ||
         err.toString();
+      // console.log(err.response.data);
+      // alert(err.response.data.message);
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-// Create async action: logout
-export const logout = createAsyncThunk('auth/logout', async () => {
-  await authService.logout();
-});
+// Create async action-reducer: logout
+export const logout = createAsyncThunk(
+  // async action type
+  'auth/logout',
+  // function return payload
+  async () => {
+    await authService.logout();
+  }
+);
 
 // Create slice
 export const authSlice = createSlice({
@@ -106,5 +120,6 @@ export const authSlice = createSlice({
   },
 });
 
+// Export actions, reducer
 export const { reset } = authSlice.actions;
 export default authSlice.reducer;

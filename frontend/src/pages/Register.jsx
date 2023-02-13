@@ -22,7 +22,7 @@ function Register() {
     name: '',
     email: '',
     password: '',
-    passwordConfirm: ' ',
+    passwordConfirm: '',
   };
 
   // 2).Configure form fields
@@ -67,7 +67,7 @@ function Register() {
         name,
         email,
         password,
-        passwordConfirm,
+        // passwordConfirm,
       };
       // update state
       dispatch(register(userData));

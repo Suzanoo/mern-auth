@@ -6,8 +6,8 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const sendEmail = require('../utils/email');
 
-// ----------------------------------------------------------------
-// Create JWT token:
+// ----------------------
+// CREATE JWT TOKEN:
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
@@ -40,6 +40,7 @@ const createSendToken = (user, statusCode, res) => {
   });
 };
 
+// ----------------------
 // SIGNUP
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
@@ -54,6 +55,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   createSendToken(newUser, 201, res);
 });
 
+// ----------------------
 // LOGIN
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body; // note: use ES6 Oject destructuring format
@@ -72,16 +74,31 @@ exports.login = catchAsync(async (req, res, next) => {
   // 3) If everything ok, send token to client
   createSendToken(user, 200, res);
 });
+// ----------------------
+// LOGOUT
+exports.logout = (req, res) => {
+  // replace cookie 'jwt token' with a cookie name 'jwt' without token
+  res.cookie('jwt', 'logged-out', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({ status: 'success' });
+};
 
+// ----------------------
 // PROTECT ROUTE
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) Getting token and check of it's there
   let token;
+  // Get from headers or
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+    // Get from cookie
+  } else if (req.cookie.jwt) {
+    token = req.cookie.jwt;
   }
 
   if (!token) {
@@ -116,6 +133,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   next();
 });
 
+// ----------------------
 // ROLES
 // Note: Middleware cannot get arguments, so use wraper fuction to parse roles instead
 // and return middleware function itself
@@ -132,6 +150,7 @@ exports.restrictTo = (...roles) => {
   };
 };
 
+// ----------------------
 // FORGET PASSWORD
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 1) Get user based on POSTed email
@@ -147,7 +166,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 3) Send it to user's email
   const resetURL = `${req.protocol}://${req.get(
     'host'
-  )}/api/v1/users/resetPassword/${resetToken}`;
+  )}/api/v1/users/reset-pwd/${resetToken}`;
 
   const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
 
@@ -160,7 +179,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
     res.status(200).json({
       status: 'success',
-      message: 'Token sent to email!',
+      message: `Token sent to ${user.email}`,
     });
   } catch (err) {
     user.passwordResetToken = undefined;
@@ -174,6 +193,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   }
 });
 
+// ----------------------
 // RESET PASSWORD
 exports.resetPassword = catchAsync(async (req, res, next) => {
   // 1) Get user based on the token
@@ -202,6 +222,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res);
 });
 
+// ----------------------
 // UPDATE CURRENT USER PASSWORD
 exports.updatePassword = catchAsync(async (req, res, next) => {
   // 1) Get user from collection

@@ -1,7 +1,7 @@
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
-const factory = require('./crudFunction');
+const crud = require('./crudFunction');
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -16,10 +16,10 @@ const filterObj = (obj, ...allowedFields) => {
 // -----------------------------------
 // ##
 // -----------------------------------
-exports.updateUser = factory.updateOne(User);
-exports.deleteAccount = factory.deleteOne(User);
-exports.getUser = factory.getOne(User);
-exports.getAllUsers = factory.getAll(User);
+exports.updateUser = crud.updateOne(User);
+exports.deleteAccount = crud.deleteOne(User);
+exports.getUser = crud.getOne(User);
+exports.getAllUsers = crud.getAll(User);
 
 exports.getMe = (req, res, next) => {
   req.params.id = req.user.id;
