@@ -6,10 +6,12 @@ And in mern-auth/package.json file, please look at the scripts block and modify 
 
 In fronted/package.json, I aready set the proxy URL on port 5000 to deal with backend, you can change it follow by your backend port.
 
-This application is not compleltely create react-app, you can do it by your self by run
+This application is not compleltely build react-app, you can do it by your self. See README.md in fronten folder for more.
 
-```
-npm run build
-```
+## Learn More
 
-see React docs for more information.
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+![https://github.com/Suzanoo/mern-auth/blob/main/frontend/public/home.png]
