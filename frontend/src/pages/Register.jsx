@@ -2,7 +2,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { FaUser } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
 import { register, reset } from '../features/auth/authSlice';
@@ -80,10 +79,7 @@ function Register() {
   return (
     <>
       <section className="heading">
-        <h1>
-          <FaUser /> Register
-        </h1>
-        <p>Please create an account</p>
+        <p>Hello Welcome ~^^</p>
       </section>
       <section className="form">
         <form onSubmit={onSubmit}>

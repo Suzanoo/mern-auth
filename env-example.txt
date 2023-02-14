@@ -1,0 +1,16 @@
+NODE_ENV=development
+
+USERNAME=''
+DATABASE=''
+DATABASE_LOCAL=mongodb://localhost:27017/login-demo
+PASSWORD=''
+
+JWT_SECRET=any-sentence-use-to-generate-jwt-token
+JWT_EXPIRES_IN=90d
+JWT_COOKIE_EXPIRES_IN=90
+
+# see https://mailtrap.io
+EMAIL_USERNAME=''
+EMAIL_PASSWORD=''
+EMAIL_HOST=smtp.mailtrap.io
+EMAIL_PORT=2525

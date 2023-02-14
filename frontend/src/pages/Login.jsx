@@ -71,9 +71,6 @@ function Login() {
   return (
     <>
       <section className="heading">
-        <h1>
-          <FaSignInAlt /> Login
-        </h1>
         <p>Login and Enjoy!</p>
       </section>
       <section className="form">
