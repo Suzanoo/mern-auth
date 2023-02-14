@@ -14,4 +14,4 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-![https://github.com/Suzanoo/mern-auth/blob/main/frontend/public/home.png]
+![Model](https://github.com/Suzanoo/mern-auth/blob/main/frontend/public/home.png)
