@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, reset } from '../features/auth/authSlice';
 
+import UserMenu from '../components/UserMenu';
+
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -23,11 +25,16 @@ function Header() {
       </div>
       <ul>
         {user ? (
-          <li>
-            <button className="btn" onClick={onLogout}>
-              <FaSignOutAlt /> Logout
-            </button>
-          </li>
+          <>
+            <li>
+              <button className="btn" onClick={onLogout}>
+                <FaSignOutAlt /> Logout
+              </button>
+            </li>
+            <li>
+              <UserMenu />
+            </li>
+          </>
         ) : (
           <>
             <li>

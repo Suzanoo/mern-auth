@@ -1,6 +1,8 @@
+/* eslint-disable */
+
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaSignInAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { login, reset } from '../features/auth/authSlice';
@@ -104,6 +106,7 @@ function Login() {
               Login
             </button>
           </div>
+          <Link to="/forgot-pwd">Forget Password!</Link>
         </form>
       </section>
     </>

@@ -71,6 +71,46 @@ export const logout = createAsyncThunk(
   }
 );
 
+// Create async action-reducer: forgot password action
+export const forgotPwd = createAsyncThunk(
+  // async action type
+  'auth/forgotPwd',
+  // function return payload
+  async (user, thunkAPI) => {
+    try {
+      return await authService.forgotPwd(user);
+    } catch (err) {
+      const message =
+        err.message ||
+        (err.response && err.response.data && err.response.data.message) ||
+        err.toString();
+      // console.log(err.response.data);
+      // alert(err.response.data.message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Create async action-reducer: reset password action
+export const resetPwd = createAsyncThunk(
+  // async action type
+  'auth/resetPwd',
+  // function return payload
+  async (data, thunkAPI) => {
+    try {
+      return await authService.resetPwd(data);
+    } catch (err) {
+      const message =
+        err.message ||
+        (err.response && err.response.data && err.response.data.message) ||
+        err.toString();
+      // console.log(err.response.data);
+      // alert(err.response.data.message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Create slice
 export const authSlice = createSlice({
   name: 'auth',
@@ -109,6 +149,33 @@ export const authSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
+      })
+      .addCase(forgotPwd.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(forgotPwd.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = action.payload;
+      })
+      .addCase(forgotPwd.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(resetPwd.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(resetPwd.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(resetPwd.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

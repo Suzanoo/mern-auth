@@ -24,11 +24,29 @@ const logout = async () => {
   localStorage.removeItem('user');
 };
 
+// Forget password
+const forgotPwd = async (userData) => {
+  const response = await axios.post(API_URL + '/forgot-pwd', userData);
+  return response;
+};
+
+// Reset password
+
+const resetPwd = async (data) => {
+  const response = await axios.patch(
+    API_URL + `/reset-pwd/${data.token}`,
+    data.userData
+  );
+  return response;
+};
+
 // Create services
 const authService = {
   register,
   login,
   logout,
+  forgotPwd,
+  resetPwd,
 };
 
 export default authService;

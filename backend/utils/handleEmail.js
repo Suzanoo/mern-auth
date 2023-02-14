@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-const sendEmail = async (options) => {
+const handleEmail = async (options) => {
   // 1) Create a transporter
   const smtpConfig = {
     host: process.env.EMAIL_HOST,
@@ -11,7 +11,6 @@ const sendEmail = async (options) => {
     port: process.env.EMAIL_PORT,
     secure: false,
   };
-  const transporter = nodemailer.createTransport(smtpConfig);
 
   // 2) Define the email options
   const mailOptions = {
@@ -23,7 +22,13 @@ const sendEmail = async (options) => {
   };
 
   // 3) Actually send the email
-  await transporter.sendMail(mailOptions);
+  if (process.env.NODE_ENV === 'development') {
+    const transporter = nodemailer.createTransport(smtpConfig);
+    await transporter.sendMail(mailOptions);
+  }
+  if (process.env.NODE_ENV === 'production') {
+    console.log('Not yet email sending for production environment');
+  }
 };
 
-module.exports = sendEmail;
+module.exports = handleEmail;
